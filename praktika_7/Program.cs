@@ -29,35 +29,26 @@ namespace praktika_7
             return number;
         }
         static int num = 1;
-        static bool NextSet(int[] mas, int n, int m)
+        static bool NextSet(ref int[] arr, int n, int k)
         {
-            int j = m - 1;
-            while (j >= 0 && mas[j] == n) j--;
-
+            int j = k - 1;
+            while (j >= 0 && arr[j] == n) j--;
             if (j < 0) return false;
-
-            if (mas[j] >= n)
-            {
+            if (arr[j] >= n)
                 j--;
-            }
-
-            mas[j]++;
-            if (j == m - 1) return true;
-
-            for (int k = j + 1; k < m; k++)
-            {
-                mas[k] = mas[j];
-            }
-
+            arr[j]++;
+            if (j == k - 1) return true;
+            for (int i = j + 1; i < k; i++)
+                arr[i] = arr[j];
             return true;
         }
 
-        static void Print(int[] mas, int n)
+        static void Print(int[] arr, int k)
         {
             Console.Write($"{num++}: ");
-            for (int i = 0; i < n; i++)
+            for (int i = 0; i < k; i++)
             {
-                Console.Write(mas[i] + " ");
+                Console.Write(arr[i] + " ");
             }
             Console.WriteLine();
         }
@@ -65,12 +56,11 @@ namespace praktika_7
         {
             int n = InputNumber("Введите число N: ");
             int k = InputNumber("Введите число K: ");
-            int h = (n > k) ? n : k;
-            int[] arr = new int[h];
-            for (int i = 0; i < h; i++)
+            int[] arr = new int[k];
+            for (int i = 0; i < k; i++)
                 arr[i] = 1;
             Print(arr, k);
-            while (NextSet(arr, n, k))
+            while (NextSet(ref arr, n, k))
                 Print(arr, k);
             Console.ReadKey();
         }
